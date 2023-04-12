@@ -6,7 +6,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1024, 768), "Asteroids");
 	window.setFramerateLimit(60);
 
-	Player player(1.5, 1.5, 512, 394);
+	Player player(1, 1, 512, 394);
 
 	while (window.isOpen())
 	{
@@ -19,8 +19,27 @@ int main()
 			}
 		}
 
+		if (event.type == sf::Event::KeyPressed)
+		{
+			player.movePlayer(event.key.code, true);
+		}
+		else if (event.type == sf::Event::KeyPressed)
+		{
+			player.movePlayer(event.key.code, true);
+		}
+
+		if (event.type == sf::Event::KeyReleased)
+		{
+			player.movePlayer(event.key.code, false);
+		}
+		else if (event.type == sf::Event::KeyReleased)
+		{
+			player.movePlayer(event.key.code, false);
+		}
+
 		window.clear();
 		player.drawTo(window);
+		player.update();
 		window.display();
 	}
 }
