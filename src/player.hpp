@@ -15,6 +15,7 @@ private:
 
 	bool rotateLeft = false;
 	bool rotateRight = false;
+	bool moveForward = false;
 };
 
 #endif

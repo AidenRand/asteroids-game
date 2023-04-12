@@ -23,15 +23,6 @@ int main()
 		{
 			player.movePlayer(event.key.code, true);
 		}
-		else if (event.type == sf::Event::KeyPressed)
-		{
-			player.movePlayer(event.key.code, true);
-		}
-
-		if (event.type == sf::Event::KeyReleased)
-		{
-			player.movePlayer(event.key.code, false);
-		}
 		else if (event.type == sf::Event::KeyReleased)
 		{
 			player.movePlayer(event.key.code, false);
