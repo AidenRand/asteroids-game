@@ -15,23 +15,42 @@ Player::Player(float width, float height, float x, float y)
 	player.setRotation(-90);
 }
 
-void Player::movePlayer()
+void Player::movePlayer(float dt)
 {
-	sf::Vector2f direction;
 	auto angle = player.getRotation() * (M_PI / 180);
+
+	// Accelerate on button press
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		while (acceleration.y <= 0.5f)
+		while (acceleration.y <= 3.0f)
 		{
-			acceleration.x += 0.05f;
-			acceleration.y += 0.05f;
-			velocity += acceleration;
+			acceleration.y += acc;
+			acceleration.x += acc;
+		}
+		velocity += acceleration;
+
+		velocity = 0.99f * velocity;
+	}
+	// Decelerate on button release
+	else
+	{
+		velocity.x -= dAcc;
+		velocity.y -= dAcc;
+		if (velocity.x <= 0.3f)
+		{
+			velocity.x = 0;
 		}
 
-		direction.x = velocity.x * cos(angle);
-		direction.y = velocity.y * sin(angle);
-		player.move(direction.x, direction.y);
+		if (velocity.y <= 0.3f)
+		{
+			velocity.y = 0;
+		}
 	}
+
+	// Move in direction player is pointed
+	direction.x = velocity.x * cos(angle);
+	direction.y = velocity.y * sin(angle);
+	player.move(direction.x * dt, direction.y * dt);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
@@ -40,34 +59,6 @@ void Player::movePlayer()
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		player.rotate(6);
-	}
-}
-
-void Player::update()
-{
-	sf::Vector2f direction;
-	auto angle = player.getRotation() * (M_PI / 180);
-	if (moveForward)
-	{
-		while (acceleration.y <= 0.5f)
-		{
-			acceleration.x += 0.05f;
-			acceleration.y += 0.05f;
-			velocity += acceleration;
-		}
-
-		direction.x = velocity.x * cos(angle);
-		direction.y = velocity.y * sin(angle);
-		player.move(direction.x, direction.y);
-	}
-
-	if (rotateLeft)
-	{
-		player.rotate(-10);
-	}
-	else if (rotateRight)
-	{
-		player.rotate(10);
 	}
 }
 

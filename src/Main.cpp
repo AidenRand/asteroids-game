@@ -1,10 +1,17 @@
 #include <SFML/Graphics.hpp>
+// #include <SFML/System.hpp>
+// #include <SFML/Window.hpp>
+#include <iostream>
 #include <player.hpp>
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 768), "Asteroids");
 	window.setFramerateLimit(60);
+
+	// Create delta time
+	sf::Clock clock;
+	float dt;
 
 	Player player(1, 1, 512, 394);
 
@@ -19,11 +26,11 @@ int main()
 			}
 		}
 
-		player.movePlayer();
+		dt = clock.restart().asSeconds();
 
 		window.clear();
+		player.movePlayer(dt);
 		player.drawTo(window);
-		// player.update();
 		window.display();
 	}
 }

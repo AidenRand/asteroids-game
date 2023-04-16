@@ -6,19 +6,17 @@ class Player
 public:
 	Player(float width, float height, float x, float y);
 	void drawTo(sf::RenderWindow& window);
-	void movePlayer();
+	void movePlayer(float dt);
 	void update();
 
 private:
 	sf::Texture texture;
 	sf::Sprite player;
 
-	bool rotateLeft = false;
-	bool rotateRight = false;
-	bool moveForward = false;
-	float stepy = 0;
-	float stepx = 0;
+	const float acc = 0.1f;
+	const float dAcc = 1.0f;
 
+	sf::Vector2f direction;
 	sf::Vector2f acceleration;
 	sf::Vector2f velocity;
 };
