@@ -19,18 +19,11 @@ int main()
 			}
 		}
 
-		if (event.type == sf::Event::KeyPressed)
-		{
-			player.movePlayer(event.key.code, true);
-		}
-		else if (event.type == sf::Event::KeyReleased)
-		{
-			player.movePlayer(event.key.code, false);
-		}
+		player.movePlayer();
 
 		window.clear();
 		player.drawTo(window);
-		player.update();
+		// player.update();
 		window.display();
 	}
 }

@@ -1,7 +1,5 @@
 #include "player.hpp"
 #include <SFML/Graphics.hpp>
-#include <cmath>
-#include <math.h>
 
 Player::Player(float width, float height, float x, float y)
 {
@@ -17,41 +15,53 @@ Player::Player(float width, float height, float x, float y)
 	player.setRotation(-90);
 }
 
-void Player::movePlayer(sf::Keyboard::Key key, bool checkPressed)
+void Player::movePlayer()
 {
-	if (key == sf::Keyboard::Up)
+	sf::Vector2f direction;
+	auto angle = player.getRotation() * (M_PI / 180);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		moveForward = true;
-	}
-	else if (key == sf::Keyboard::Left)
-	{
-		rotateLeft = true;
-	}
-	else if (key == sf::Keyboard::Right)
-	{
-		rotateRight = true;
+		while (acceleration.y <= 0.5f)
+		{
+			acceleration.x += 0.05f;
+			acceleration.y += 0.05f;
+			velocity += acceleration;
+		}
+
+		direction.x = velocity.x * cos(angle);
+		direction.y = velocity.y * sin(angle);
+		player.move(direction.x, direction.y);
 	}
 
-	if (!checkPressed)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		rotateLeft = false;
-		rotateRight = false;
-		moveForward = false;
+		player.rotate(-6);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		player.rotate(6);
 	}
 }
 
 void Player::update()
 {
-	float movementSpeed = 5;
 	sf::Vector2f direction;
 	auto angle = player.getRotation() * (M_PI / 180);
 	if (moveForward)
 	{
-		direction.x = movementSpeed * cos(angle);
-		direction.y = movementSpeed * sin(angle);
+		while (acceleration.y <= 0.5f)
+		{
+			acceleration.x += 0.05f;
+			acceleration.y += 0.05f;
+			velocity += acceleration;
+		}
+
+		direction.x = velocity.x * cos(angle);
+		direction.y = velocity.y * sin(angle);
 		player.move(direction.x, direction.y);
 	}
-	else if (rotateLeft)
+
+	if (rotateLeft)
 	{
 		player.rotate(-10);
 	}
