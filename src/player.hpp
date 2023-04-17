@@ -10,7 +10,8 @@ public:
 	void update();
 
 private:
-	sf::Texture texture;
+	sf::Texture normalTexture;
+	sf::Texture firedTexture;
 	sf::Sprite player;
 
 	const float acc = 0.1f;
