@@ -34,9 +34,9 @@ void Player::movePlayer(float dt)
 			acceleration.x += acc;
 		}
 		velocity += acceleration;
-		velocity = 0.99f * velocity;
-		direction.x = velocity.x * cos(angle);
-		direction.y = velocity.y * sin(angle);
+		velocity = 0.39f * velocity;
+		direction.x += velocity.x * cos(angle);
+		direction.y += velocity.y * sin(angle);
 	}
 	// Decelerate on button release
 	else
