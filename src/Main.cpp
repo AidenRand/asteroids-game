@@ -6,14 +6,16 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1024, 768), "Asteroids");
+	int screenWidth = 1000;
+	int screenHeight = 800;
+	sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "Asteroids");
 	window.setFramerateLimit(60);
 
 	// Create delta time
 	sf::Clock clock;
 	float dt;
 
-	Player player(1, 1, 512, 394);
+	Player player(1, 1);
 
 	while (window.isOpen())
 	{
@@ -30,6 +32,7 @@ int main()
 
 		window.clear();
 		player.movePlayer(dt);
+		player.screenWrapping(screenWidth, screenHeight);
 		player.drawTo(window);
 		window.display();
 	}
