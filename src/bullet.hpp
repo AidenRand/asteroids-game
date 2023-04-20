@@ -7,12 +7,15 @@
 class Bullet
 {
 public:
-	Bullet(float width, float height, float x, float y);
+	Bullet(int width, int height);
+	void setPos(sf::Vector2f newPos);
 	void drawTo(sf::RenderWindow& window);
-	void fireBullet(int speedX, int speedY, Player& player);
+	void fireBullet(int speed, Player& player);
+	void moveBullet();
 
 private:
 	sf::RectangleShape bullet;
+	sf::Vector2f velocity;
 };
 
 #endif

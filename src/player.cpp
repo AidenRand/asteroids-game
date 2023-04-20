@@ -27,7 +27,7 @@ void Player::movePlayer(float dt)
 	{
 		player.setTexture(firedTexture);
 
-		while (acceleration.y <= 1.0f)
+		while (acceleration.y <= 2.0f)
 		{
 			acceleration.y += acc;
 			acceleration.x += acc;
@@ -56,11 +56,11 @@ void Player::movePlayer(float dt)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		player.rotate(-4);
+		player.rotate(-5);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		player.rotate(4);
+		player.rotate(5);
 	}
 
 	// Move in direction player is pointed
@@ -98,6 +98,11 @@ int Player::returnX()
 int Player::returnY()
 {
 	return player.getPosition().y;
+}
+
+int Player::returnAngle()
+{
+	return player.getRotation();
 }
 
 void Player::drawTo(sf::RenderWindow& window)

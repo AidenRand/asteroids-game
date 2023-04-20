@@ -10,10 +10,11 @@ int main()
 	int screenHeight = 800;
 	sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "Asteroids");
 	window.setFramerateLimit(60);
-
 	// Create delta time
 	sf::Clock clock;
 	float dt;
+
+	Bullet bullet(10, 10);
 
 	std::vector<Bullet> bulletVec;
 	bool isFiring = false;
@@ -39,15 +40,16 @@ int main()
 		window.clear();
 		if (isFiring)
 		{
-			Bullet bullet(2, 2, player.returnX(), player.returnY());
+			bullet.fireBullet(10, player);
+			bullet.setPos(sf::Vector2f(player.returnX(), player.returnY()));
 			bulletVec.push_back(bullet);
 			isFiring = false;
 		}
 
-		for (long unsigned int i = 0; i < bulletVec.size(); i++)
+		for (auto& bullet : bulletVec)
 		{
-			bulletVec[i].fireBullet(10, 10, player);
-			bulletVec[i].drawTo(window);
+			bullet.moveBullet();
+			bullet.drawTo(window);
 		}
 
 		dt = clock.restart().asSeconds();

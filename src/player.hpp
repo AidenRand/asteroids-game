@@ -12,8 +12,7 @@ public:
 	void screenWrapping(int& screen_width, int& screen_height);
 	int returnX();
 	int returnY();
-	int returnAngleX();
-	int returnAngleY();
+	int returnAngle();
 
 	sf::Vector2f direction;
 	sf::Sprite player;
