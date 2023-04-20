@@ -21,8 +21,7 @@ Player::Player(float width, float height)
 
 void Player::movePlayer(float dt)
 {
-	auto angle = player.getRotation() * (M_PI / 180);
-
+	int angle = player.getRotation() * (M_PI / 180);
 	// Accelerate on button press
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
@@ -55,9 +54,6 @@ void Player::movePlayer(float dt)
 		}
 	}
 
-	// Move in direction player is pointed
-	player.move(direction * dt);
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		player.rotate(-4);
@@ -66,6 +62,9 @@ void Player::movePlayer(float dt)
 	{
 		player.rotate(4);
 	}
+
+	// Move in direction player is pointed
+	player.move(direction * dt);
 }
 
 void Player::screenWrapping(int& screenWidth, int& screenHeight)
@@ -89,6 +88,16 @@ void Player::screenWrapping(int& screenWidth, int& screenHeight)
 	{
 		player.setPosition(player.getPosition().x, screenHeight);
 	}
+}
+
+int Player::returnX()
+{
+	return player.getPosition().x;
+}
+
+int Player::returnY()
+{
+	return player.getPosition().y;
 }
 
 void Player::drawTo(sf::RenderWindow& window)

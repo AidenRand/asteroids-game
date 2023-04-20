@@ -1,6 +1,8 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
+#include <SFML/Graphics.hpp>
+
 class Player
 {
 public:
@@ -8,16 +10,22 @@ public:
 	void drawTo(sf::RenderWindow& window);
 	void movePlayer(float dt);
 	void screenWrapping(int& screen_width, int& screen_height);
+	int returnX();
+	int returnY();
+	int returnAngleX();
+	int returnAngleY();
+
+	sf::Vector2f direction;
+	sf::Sprite player;
 
 private:
 	sf::Texture normalTexture;
 	sf::Texture firedTexture;
-	sf::Sprite player;
+	sf::RectangleShape bullet;
 
 	const float acc = 0.1f;
 	const float dAcc = 1.0f;
 
-	sf::Vector2f direction;
 	sf::Vector2f acceleration;
 	sf::Vector2f velocity;
 	float x = 512;

@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
-// #include <SFML/System.hpp>
-// #include <SFML/Window.hpp>
+#include <bullet.hpp>
 #include <iostream>
 #include <player.hpp>
+#include <vector>
 
 int main()
 {
@@ -15,6 +15,9 @@ int main()
 	sf::Clock clock;
 	float dt;
 
+	std::vector<Bullet> bulletVec;
+	bool isFiring = false;
+
 	Player player(1, 1);
 
 	while (window.isOpen())
@@ -26,11 +29,29 @@ int main()
 			{
 				window.close();
 			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			{
+				isFiring = true;
+			}
+		}
+
+		window.clear();
+		if (isFiring)
+		{
+			Bullet bullet(2, 2, player.returnX(), player.returnY());
+			bulletVec.push_back(bullet);
+			isFiring = false;
+		}
+
+		for (long unsigned int i = 0; i < bulletVec.size(); i++)
+		{
+			bulletVec[i].fireBullet(10, 10, player);
+			bulletVec[i].drawTo(window);
 		}
 
 		dt = clock.restart().asSeconds();
 
-		window.clear();
 		player.movePlayer(dt);
 		player.screenWrapping(screenWidth, screenHeight);
 		player.drawTo(window);
