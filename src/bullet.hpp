@@ -10,8 +10,10 @@ public:
 	Bullet(int width, int height);
 	void setPos(sf::Vector2f newPos);
 	void drawTo(sf::RenderWindow& window);
-	void fireBullet(int speed, Player& player);
-	void moveBullet();
+	void fireBullet(int speed, Player& player, float& dt);
+	void moveBullet(float dt);
+	int returnPosX();
+	int returnPosY();
 
 private:
 	sf::RectangleShape bullet;

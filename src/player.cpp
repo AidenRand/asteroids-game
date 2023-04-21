@@ -25,7 +25,16 @@ void Player::movePlayer(float dt)
 	// Accelerate on button press
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		player.setTexture(firedTexture);
+		// Flicker engine when holding w or up
+		switchTexture += 5;
+		if (switchTexture % 6 == 0)
+		{
+			player.setTexture(firedTexture);
+		}
+		else
+		{
+			player.setTexture(normalTexture);
+		}
 
 		while (acceleration.y <= 2.0f)
 		{
@@ -41,6 +50,7 @@ void Player::movePlayer(float dt)
 	else
 	{
 		player.setTexture(normalTexture);
+		switchTexture = 0;
 
 		velocity -= acceleration;
 		if (velocity.x <= 0.3f)

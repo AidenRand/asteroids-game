@@ -21,8 +21,9 @@ private:
 	sf::Texture normalTexture;
 	sf::Texture firedTexture;
 	sf::RectangleShape bullet;
+	int switchTexture = 0;
 
-	const float acc = 0.8f;
+	const float acc = 1.0f;
 	const float dAcc = 1.0f;
 
 	sf::Vector2f acceleration;

@@ -40,11 +40,13 @@ int main()
 
 		window.clear();
 		// If isFiring is true, fire the bullet
+
+		dt = clock.restart().asSeconds();
 		if (reloadTimer == 0)
 		{
 			if (isFiring)
 			{
-				bullet.fireBullet(10, player);
+				bullet.fireBullet(550, player, dt);
 				bullet.setPos(sf::Vector2f(player.returnX(), player.returnY()));
 				bulletVec.push_back(bullet);
 				isFiring = false;
@@ -55,13 +57,19 @@ int main()
 			reloadTimer--;
 		}
 
-		for (auto& bullet : bulletVec)
+		// Continue moving bullet in original direction
+		for (long unsigned int i = 0; i < bulletVec.size(); i++)
 		{
-			bullet.moveBullet();
-			bullet.drawTo(window);
-		}
+			bulletVec[i].moveBullet(dt);
+			bulletVec[i].drawTo(window);
 
-		dt = clock.restart().asSeconds();
+			// Despawn bullets when they go beyond screen
+			if (bulletVec[i].returnPosX() < 0 || bulletVec[i].returnPosX() > screenWidth
+				|| bulletVec[i].returnPosY() < 0 || bulletVec[i].returnPosY() > screenHeight)
+			{
+				bulletVec.erase(bulletVec.begin() + i);
+			}
+		}
 
 		player.movePlayer(dt);
 		player.screenWrapping(screenWidth, screenHeight);
