@@ -22,7 +22,7 @@ private:
 	sf::Texture firedTexture;
 	sf::RectangleShape bullet;
 
-	const float acc = 0.1f;
+	const float acc = 0.8f;
 	const float dAcc = 1.0f;
 
 	sf::Vector2f acceleration;

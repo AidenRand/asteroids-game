@@ -6,12 +6,12 @@ Player::Player(float width, float height)
 	player.setScale(width, height);
 	if (!normalTexture.loadFromFile("content/normal.png"))
 	{
-		std::cout << "Could not load player texture";
+		std::cout << "ERROR: Could not load player texture";
 	}
 
 	if (!firedTexture.loadFromFile("content/fired.png"))
 	{
-		std::cout << "Could not load player texture";
+		std::cout << "ERROR: Could not load player texture";
 	}
 	player.setTexture(normalTexture);
 	player.setScale(width, height);
@@ -33,7 +33,7 @@ void Player::movePlayer(float dt)
 			acceleration.x += acc;
 		}
 		velocity += acceleration;
-		velocity = 0.50f * velocity;
+		velocity = 0.40f * velocity;
 		direction.x += velocity.x * cos(angle);
 		direction.y += velocity.y * sin(angle);
 	}

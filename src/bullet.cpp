@@ -30,5 +30,5 @@ void Bullet::fireBullet(int speed, Player& player)
 
 void Bullet::moveBullet()
 {
-	bullet.move(velocity.x, velocity.y);
+	bullet.move(velocity);
 }

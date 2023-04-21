@@ -14,10 +14,10 @@ int main()
 	sf::Clock clock;
 	float dt;
 
-	Bullet bullet(10, 10);
-
+	Bullet bullet(2, 2);
 	std::vector<Bullet> bulletVec;
 	bool isFiring = false;
+	unsigned int reloadTimer = 0;
 
 	Player player(1, 1);
 
@@ -34,16 +34,25 @@ int main()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
 				isFiring = true;
+				reloadTimer++;
 			}
 		}
 
 		window.clear();
-		if (isFiring)
+		// If isFiring is true, fire the bullet
+		if (reloadTimer == 0)
 		{
-			bullet.fireBullet(10, player);
-			bullet.setPos(sf::Vector2f(player.returnX(), player.returnY()));
-			bulletVec.push_back(bullet);
-			isFiring = false;
+			if (isFiring)
+			{
+				bullet.fireBullet(10, player);
+				bullet.setPos(sf::Vector2f(player.returnX(), player.returnY()));
+				bulletVec.push_back(bullet);
+				isFiring = false;
+			}
+		}
+		else
+		{
+			reloadTimer--;
 		}
 
 		for (auto& bullet : bulletVec)
