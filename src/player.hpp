@@ -20,7 +20,6 @@ public:
 private:
 	sf::Texture normalTexture;
 	sf::Texture firedTexture;
-	sf::RectangleShape bullet;
 	int switchTexture = 0;
 
 	const float acc = 1.0f;

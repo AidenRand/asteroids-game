@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <asteroid.hpp>
 #include <bullet.hpp>
 #include <iostream>
 #include <player.hpp>
@@ -20,6 +21,8 @@ int main()
 	unsigned int reloadTimer = 0;
 
 	Player player(1, 1);
+
+	std::vector<Asteroid> asteroidVec;
 
 	while (window.isOpen())
 	{
@@ -47,6 +50,7 @@ int main()
 			if (isFiring)
 			{
 				bullet.fireBullet(550, player, dt);
+				Asteroid asteroids(1, 1);
 				bullet.setPos(sf::Vector2f(player.returnX(), player.returnY()));
 				bulletVec.push_back(bullet);
 				isFiring = false;
@@ -62,6 +66,8 @@ int main()
 		{
 			bulletVec[i].moveBullet(dt);
 			bulletVec[i].drawTo(window);
+			asteroidVec[i].moveAsteroids();
+			asteroidVec[i].drawAsteroids(window);
 
 			// Despawn bullets when they go beyond screen
 			if (bulletVec[i].returnPosX() < 0 || bulletVec[i].returnPosX() > screenWidth
