@@ -10,8 +10,9 @@ class Asteroid
 {
 public:
 	Asteroid(float width, float weight);
-	void moveAsteroids();
-	void drawLarge(sf::RenderWindow& window);
+	void moveAsteroid();
+	void screenWrapping(int screenWidth, int screenHeight, float astRadius);
+	void drawTo(sf::RenderWindow& window);
 
 private:
 	sf::Texture largeTexture;

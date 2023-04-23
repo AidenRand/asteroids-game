@@ -17,14 +17,14 @@ Asteroid::Asteroid(float width, float height)
 	randomLargeX = (rand() % 800) + 1;
 	randomLargeY = (rand() % 600) + 1;
 	randomAngle = rand() % 360;
-	step = (rand() % 6) + (-3);
+	step = (rand() % 15) + (-3);
 	direction.x = -cos(randomAngle * (M_PI / 180));
 	direction.y = sin(randomAngle * (M_PI / 180));
 
 	largeAsteroid.setPosition(randomLargeX, randomLargeY);
 }
 
-void Asteroid::moveAsteroids()
+void Asteroid::moveAsteroid()
 {
 
 	velocity.x = direction.x * step;
@@ -32,7 +32,30 @@ void Asteroid::moveAsteroids()
 	largeAsteroid.move(velocity);
 }
 
-void Asteroid::drawLarge(sf::RenderWindow& window)
+void Asteroid::screenWrapping(int screenWidth, int screenHeight, float astRadius)
+{
+	// If player goes beyond x bounds set position to opposite site of screen
+	if (largeAsteroid.getPosition().x > screenWidth + astRadius)
+	{
+		largeAsteroid.setPosition(0, largeAsteroid.getPosition().y);
+	}
+	else if (largeAsteroid.getPosition().x <= 0 - astRadius)
+	{
+		largeAsteroid.setPosition(screenWidth, largeAsteroid.getPosition().y);
+	}
+
+	// If player goes beyond y bounds set position to opposite site of screen
+	if (largeAsteroid.getPosition().y >= screenHeight + astRadius)
+	{
+		largeAsteroid.setPosition(largeAsteroid.getPosition().x, 0);
+	}
+	else if (largeAsteroid.getPosition().y <= 0 - astRadius)
+	{
+		largeAsteroid.setPosition(largeAsteroid.getPosition().x, screenHeight);
+	}
+}
+
+void Asteroid::drawTo(sf::RenderWindow& window)
 {
 	window.draw(largeAsteroid);
 }

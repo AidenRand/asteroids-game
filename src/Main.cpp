@@ -79,8 +79,9 @@ int main()
 			}
 		}
 
-		asteroids.drawLarge(window);
-		asteroids.moveAsteroids();
+		asteroids.moveAsteroid();
+		asteroids.screenWrapping(screenWidth, screenHeight, 50);
+		asteroids.drawTo(window);
 		player.movePlayer(dt);
 		player.screenWrapping(screenWidth, screenHeight);
 		player.drawTo(window);
