@@ -1,46 +1,38 @@
 #include <SFML/Graphics.hpp>
 #include <asteroid.hpp>
 
-Asteroid::Asteroid(float smallWidth, float smallHeight)
+Asteroid::Asteroid(float width, float height)
 {
-	if (!smallTexture.loadFromFile("content/smallAsteroid.png"))
+	if (!largeTexture.loadFromFile("content/largeAsteroid.png"))
 	{
-		std::cout << "ERROR: Could not load small asteroid texture";
+		std::cout << "ERROR: Could not load large asteroid texture";
 	}
+	largeAsteroid.setTexture(largeTexture);
 
-	// if (!mediumTexture.loadFromFile("content/mediumAsteroid.png"))
-	// {
-	// 	std::cout << "ERROR: Could not load medium asteroid texture";
-	// }
+	largeAsteroid.setOrigin(64, 64);
+	largeAsteroid.setScale(width, height);
 
-	// if (!largeTexture.loadFromFile("content/largeAsteroid.png"))
-	// {
-	// 	std::cout << "ERROR: Could not load large asteroid texture";
-	// }
+	std::srand((int)std::time(NULL));
 
-	smallAsteroid.setScale(smallWidth, smallHeight);
-	smallAsteroid.setTexture(smallTexture);
-	// mediumAsteroid.setTexture(mediumTexture);
-	// largeAsteroid.setTexture(largeTexture);
+	randomLargeX = (rand() % 800) + 1;
+	randomLargeY = (rand() % 600) + 1;
+	randomAngle = rand() % 360;
+	step = (rand() % 6) + (-3);
+	direction.x = -cos(randomAngle * (M_PI / 180));
+	direction.y = sin(randomAngle * (M_PI / 180));
 
-	smallAsteroid.setOrigin(16, 16);
-	// mediumAsteroid.setOrigin(32, 32);
-	// largeAsteroid.setOrigin(64, 64);
-	smallAsteroid.setPosition(randomX, randomY);
-	// mediumAsteroid.setPosition(randomX, randomY);
-	// largeAsteroid.setPosition(randomX, randomY);
+	largeAsteroid.setPosition(randomLargeX, randomLargeY);
 }
 
 void Asteroid::moveAsteroids()
 {
-	smallAsteroid.move(stepX, stepY);
-	// mediumAsteroid.move(stepX, stepY);
-	// largeAsteroid.move(stepX, stepY);
+
+	velocity.x = direction.x * step;
+	velocity.y = direction.y * step;
+	largeAsteroid.move(velocity);
 }
 
-void Asteroid::drawAsteroids(sf::RenderWindow& window)
+void Asteroid::drawLarge(sf::RenderWindow& window)
 {
-	window.draw(smallAsteroid);
-	// window.draw(mediumAsteroid);
-	// window.draw(largeAsteroid);
+	window.draw(largeAsteroid);
 }
