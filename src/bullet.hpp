@@ -15,8 +15,9 @@ public:
 	int returnPosX();
 	int returnPosY();
 
-private:
 	sf::RectangleShape bullet;
+
+private:
 	sf::Vector2f velocity;
 };
 

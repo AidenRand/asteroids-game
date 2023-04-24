@@ -1,9 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <asteroid.hpp>
+#include <bullet.hpp>
+#include <vector>
 
 Asteroid::Asteroid(float width, float height)
 {
-	if (!largeTexture.loadFromFile("content/largeAsteroid.png"))
+	// Load asteroid texture
+	if (!largeTexture.loadFromFile("content/asteroid.png"))
 	{
 		std::cout << "ERROR: Could not load large asteroid texture";
 	}
@@ -12,23 +15,12 @@ Asteroid::Asteroid(float width, float height)
 	largeAsteroid.setOrigin(64, 64);
 	largeAsteroid.setScale(width, height);
 
-	std::srand((int)std::time(NULL));
-
-	randomLargeX = (rand() % 800) + 1;
-	randomLargeY = (rand() % 600) + 1;
-	randomAngle = rand() % 360;
-	step = (rand() % 15) + (-3);
-	direction.x = -cos(randomAngle * (M_PI / 180));
-	direction.y = sin(randomAngle * (M_PI / 180));
-
 	largeAsteroid.setPosition(randomLargeX, randomLargeY);
 }
 
 void Asteroid::moveAsteroid()
 {
 
-	velocity.x = direction.x * step;
-	velocity.y = direction.y * step;
 	largeAsteroid.move(velocity);
 }
 
@@ -53,6 +45,32 @@ void Asteroid::screenWrapping(int screenWidth, int screenHeight, float astRadius
 	{
 		largeAsteroid.setPosition(largeAsteroid.getPosition().x, screenHeight);
 	}
+}
+
+void Asteroid::bulletCollision(Bullet& bullet)
+{
+	auto bulletRect = bullet.bullet;
+
+	if (largeAsteroid.getGlobalBounds().intersects(bulletRect.getGlobalBounds()))
+	{
+		largeAsteroid.setScale(0.5, 0.5);
+	}
+}
+
+sf::Vector2f Asteroid::chooseDir()
+{
+	std::srand((int)std::time(NULL));
+
+	randomLargeX = (rand() % 800) + 1;
+	randomLargeY = (rand() % 600) + 1;
+	randomAngle = rand() % 360;
+	step = (rand() % 10) + (-3);
+	direction.x = -cos(randomAngle * (M_PI / 180));
+	direction.y = sin(randomAngle * (M_PI / 180));
+	velocity.x = direction.x * step;
+	velocity.y = direction.y * step;
+
+	return velocity;
 }
 
 void Asteroid::drawTo(sf::RenderWindow& window)
