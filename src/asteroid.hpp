@@ -15,20 +15,18 @@ public:
 	void screenWrapping(int screenWidth, int screenHeight, float astRadius);
 	void bulletCollision(Bullet& bullet);
 	void drawTo(sf::RenderWindow& window);
-	sf::Vector2f chooseDir();
 
 private:
 	sf::Texture largeTexture;
 	sf::Sprite largeAsteroid;
 
-	int step;
-
-	int randomLargeX;
-	int randomLargeY;
-
-	int randomAngle;
 	sf::Vector2f direction;
 	sf::Vector2f velocity;
+
+	int randomLargeX = (rand() % 1) + (-500);
+	int randomLargeY = (rand() % 1) + (-500);
+	int randomAngle = rand() % 360;
+	int step = (rand() % 10) + (-3);
 };
 
 #endif

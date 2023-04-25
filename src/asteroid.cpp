@@ -15,7 +15,12 @@ Asteroid::Asteroid(float width, float height)
 	largeAsteroid.setOrigin(64, 64);
 	largeAsteroid.setScale(width, height);
 
-	largeAsteroid.setPosition(randomLargeX, randomLargeY);
+	direction.x = -cos(randomAngle * (M_PI / 180));
+	direction.y = sin(randomAngle * (M_PI / 180));
+	velocity.x = direction.x * step;
+	velocity.y = direction.y * step;
+
+	largeAsteroid.setPosition(sf::Vector2f(randomLargeX, randomLargeY));
 }
 
 void Asteroid::moveAsteroid()
@@ -54,23 +59,9 @@ void Asteroid::bulletCollision(Bullet& bullet)
 	if (largeAsteroid.getGlobalBounds().intersects(bulletRect.getGlobalBounds()))
 	{
 		largeAsteroid.setScale(0.5, 0.5);
+		std::cout << "collision"
+				  << "\n";
 	}
-}
-
-sf::Vector2f Asteroid::chooseDir()
-{
-	std::srand((int)std::time(NULL));
-
-	randomLargeX = (rand() % 800) + 1;
-	randomLargeY = (rand() % 600) + 1;
-	randomAngle = rand() % 360;
-	step = (rand() % 10) + (-3);
-	direction.x = -cos(randomAngle * (M_PI / 180));
-	direction.y = sin(randomAngle * (M_PI / 180));
-	velocity.x = direction.x * step;
-	velocity.y = direction.y * step;
-
-	return velocity;
 }
 
 void Asteroid::drawTo(sf::RenderWindow& window)

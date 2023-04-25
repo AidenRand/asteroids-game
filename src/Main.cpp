@@ -21,8 +21,7 @@ int main()
 	unsigned int reloadTimer = 0;
 
 	Player player(1, 1);
-
-	Asteroid asteroids(1, 1);
+	long unsigned int maxAsteroids = 10;
 
 	std::vector<Asteroid> asteroidVec;
 
@@ -42,7 +41,7 @@ int main()
 				reloadTimer++;
 			}
 		}
-		window.clear();
+		window.clear(sf::Color(5, 5, 5));
 
 		// If isFiring is true, fire the bullet
 		dt = clock.restart().asSeconds();
@@ -66,7 +65,7 @@ int main()
 		{
 			bulletVec[i].moveBullet(dt);
 			bulletVec[i].drawTo(window);
-			asteroids.bulletCollision(bulletVec[i]);
+			asteroidVec[i].bulletCollision(bulletVec[i]);
 
 			// Despawn bullets when they go beyond screen
 			if (bulletVec[i].returnPosX() < 0 || bulletVec[i].returnPosX() > screenWidth
@@ -76,18 +75,18 @@ int main()
 			}
 		}
 
-		asteroidVec.push_back(asteroids);
+		Asteroid asteroids(1, 1);
 
-		for (long unsigned int i = 0; i < asteroidVec.size(); i++)
+		if (asteroidVec.size() < maxAsteroids)
+		{
+			asteroidVec.push_back(asteroids);
+		}
+
+		for (long unsigned int i = 0; i != asteroidVec.size(); i++)
 		{
 			asteroidVec[i].moveAsteroid();
 			asteroidVec[i].screenWrapping(screenWidth, screenHeight, 64);
 			asteroidVec[i].drawTo(window);
-		}
-
-		for (int i = 0; i != 5; i++)
-		{
-			asteroids.chooseDir();
 		}
 
 		player.movePlayer(dt);
