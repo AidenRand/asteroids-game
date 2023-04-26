@@ -15,6 +15,11 @@ Asteroid::Asteroid(float width, float height)
 	largeAsteroid.setOrigin(64, 64);
 	largeAsteroid.setScale(width, height);
 
+	// Generate random position and speed of asteroid
+	int randomLargeX = (rand() % 12) - (rand() % 12);
+	int randomLargeY = (rand() % 12) - (rand() % 12);
+	randomAngle = rand() % 360;
+	step = (rand() % 300);
 	direction.x = -cos(randomAngle * (M_PI / 180));
 	direction.y = sin(randomAngle * (M_PI / 180));
 	velocity.x = direction.x * step;
@@ -23,10 +28,9 @@ Asteroid::Asteroid(float width, float height)
 	largeAsteroid.setPosition(sf::Vector2f(randomLargeX, randomLargeY));
 }
 
-void Asteroid::moveAsteroid()
+void Asteroid::moveAsteroid(float dt)
 {
-
-	largeAsteroid.move(velocity);
+	largeAsteroid.move(velocity * dt);
 }
 
 void Asteroid::screenWrapping(int screenWidth, int screenHeight, float astRadius)

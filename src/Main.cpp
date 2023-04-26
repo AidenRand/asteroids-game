@@ -11,6 +11,7 @@ int main()
 	int screenHeight = 800;
 	sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "Asteroids");
 	window.setFramerateLimit(60);
+	std::srand(time(NULL));
 	// Create delta time
 	sf::Clock clock;
 	float dt;
@@ -21,7 +22,7 @@ int main()
 	unsigned int reloadTimer = 0;
 
 	Player player(1, 1);
-	long unsigned int maxAsteroids = 10;
+	long unsigned int maxAsteroids = 5;
 
 	std::vector<Asteroid> asteroidVec;
 
@@ -61,11 +62,11 @@ int main()
 		}
 
 		// Continue moving bullet in original direction
-		for (long unsigned int i = 0; i < bulletVec.size(); i++)
+		for (long unsigned int i = 0; i < bulletVec.size(); ++i)
 		{
+			asteroidVec[i].bulletCollision(bulletVec[i]);
 			bulletVec[i].moveBullet(dt);
 			bulletVec[i].drawTo(window);
-			asteroidVec[i].bulletCollision(bulletVec[i]);
 
 			// Despawn bullets when they go beyond screen
 			if (bulletVec[i].returnPosX() < 0 || bulletVec[i].returnPosX() > screenWidth
@@ -84,7 +85,7 @@ int main()
 
 		for (long unsigned int i = 0; i != asteroidVec.size(); i++)
 		{
-			asteroidVec[i].moveAsteroid();
+			asteroidVec[i].moveAsteroid(dt);
 			asteroidVec[i].screenWrapping(screenWidth, screenHeight, 64);
 			asteroidVec[i].drawTo(window);
 		}

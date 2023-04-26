@@ -66,11 +66,11 @@ void Player::movePlayer(float dt)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		player.rotate(-5);
+		player.rotate(-6);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		player.rotate(5);
+		player.rotate(6);
 	}
 
 	// Move in direction player is pointed
