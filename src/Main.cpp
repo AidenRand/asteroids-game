@@ -16,7 +16,7 @@ int main()
 	sf::Clock clock;
 	float dt;
 
-	Bullet bullet(2, 2);
+	Bullet bullet(5, 5);
 	std::vector<Bullet> bulletVec;
 	bool isFiring = false;
 	unsigned int reloadTimer = 0;
@@ -52,8 +52,9 @@ int main()
 			{
 				bullet.fireBullet(550, player, dt);
 				bullet.setPos(sf::Vector2f(player.returnX(), player.returnY()));
-				bulletVec.push_back(bullet);
 				isFiring = false;
+				reloadTimer += 10;
+				bulletVec.push_back(bullet);
 			}
 		}
 		else
@@ -61,8 +62,11 @@ int main()
 			reloadTimer--;
 		}
 
+		Asteroid asteroids(1, 1);
+		asteroids.chooseTexture();
+
 		// Continue moving bullet in original direction
-		for (long unsigned int i = 0; i < bulletVec.size(); ++i)
+		for (long unsigned int i = 0; i < bulletVec.size(); i++)
 		{
 			asteroidVec[i].bulletCollision(bulletVec[i]);
 			bulletVec[i].moveBullet(dt);
@@ -75,8 +79,6 @@ int main()
 				bulletVec.erase(bulletVec.begin() + i);
 			}
 		}
-
-		Asteroid asteroids(1, 1);
 
 		if (asteroidVec.size() < maxAsteroids)
 		{

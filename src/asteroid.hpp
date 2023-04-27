@@ -14,11 +14,14 @@ public:
 	void moveAsteroid(float dt);
 	void screenWrapping(int screenWidth, int screenHeight, float astRadius);
 	void bulletCollision(Bullet& bullet);
+	void chooseTexture();
 	void drawTo(sf::RenderWindow& window);
 
 private:
-	sf::Texture largeTexture;
-	sf::Sprite largeAsteroid;
+	sf::Texture texture1;
+	sf::Texture texture2;
+	sf::Texture texture3;
+	sf::Sprite asteroid;
 
 	sf::Vector2f direction;
 	sf::Vector2f velocity;
